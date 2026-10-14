@@ -1,0 +1,35 @@
+# --- Secrets: never commit ---------------------------------------------
+# Real credentials live only in .env. .env.example (fake values) is the
+# only env file tracked.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# --- Dependencies --------------------------------------------------------
+/vendor/
+
+# --- Test & tool caches --------------------------------------------------
+/.phpunit.cache/
+.phpunit.result.cache
+/coverage/
+.php-cs-fixer.cache
+.phpcs-cache
+
+# --- Runtime output ------------------------------------------------------
+/var/
+*.log
+
+# --- Local assistant settings (personal, never shared) -------------------
+/.claude/settings.local.json
+CLAUDE.local.md
+
+# --- Editors & OS --------------------------------------------------------
+/.vscode/*
+!/.vscode/extensions.json
+/.idea/
+.DS_Store
+Thumbs.db
+*.swp

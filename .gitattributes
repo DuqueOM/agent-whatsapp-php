@@ -1,0 +1,7 @@
+# Normalize line endings to LF (the project runs in Linux containers,
+# edited from Windows + WSL).
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.mp4 binary
