@@ -1,0 +1,43 @@
+services:
+  app:
+    build: .
+    # Run as the host user so files created in the container (vendor/,
+    # caches) are not owned by root on the host.
+    user: "${UID:-1000}:${GID:-1000}"
+    env_file: .env
+    # Published on localhost only: the browser and the HTTPS tunnel reach it,
+    # other devices on the network do not.
+    ports:
+      - "127.0.0.1:${APP_PORT:-8088}:8080"
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: php -S 0.0.0.0:8080 -t public
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_TEST_DATABASE: ${DB_TEST_DATABASE}
+    # utf8mb4 stores the full Unicode range, including emojis.
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_0900_ai_ci
+    ports:
+      - "127.0.0.1:${DB_HOST_PORT:-3306}:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  db-data:
