@@ -89,9 +89,9 @@ next forecast.
 
 | Backlog | Ready | In progress | Review | Done |
 |---|---|---|---|---|
-| M2-01 … M2-03 | M0-02 Store name | — | M1-01 Containers | M0-06 Repo & secret guardrails (10-14 → 10-14) |
-| M3-01 … M3-02 | M0-04 LLM account | | M1-02 Toolchain | |
-| M4-01 … M4-08 | M0-01 Spec | | | |
+| M2-01 … M2-03 | M0-02 Store name | — | — | M0-06 Repo & secret guardrails (10-14 → 10-14) |
+| M3-01 … M3-02 | M0-04 LLM account | | | M1-01 Containers (10-14 → 10-19) |
+| M4-01 … M4-08 | M0-01 Spec | | | M1-02 Toolchain (10-14 → 10-19) |
 | M5-01 … M5-04 | M0-07 WhatsApp notes | | | |
 | M6-01 … M6-07 | M0-03 Meta app | | | |
 | M7-01 … M7-05 | M0-05 Local `.env` | | | |
