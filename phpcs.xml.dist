@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset name="agent-whatsapp-php">
+    <description>PSR-12 coding style.</description>
+
+    <file>src</file>
+    <file>tests</file>
+    <file>bin</file>
+    <file>public</file>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <!-- Show the rule (sniff) behind each error, so it can be looked up. -->
+    <arg value="s"/>
+
+    <rule ref="PSR12"/>
+</ruleset>

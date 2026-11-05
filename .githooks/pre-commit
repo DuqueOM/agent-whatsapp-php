@@ -1,0 +1,30 @@
+#!/bin/sh
+# Pre-commit checks. Enable once per clone:  git config core.hooksPath .githooks
+#   1. Secrets: gitleaks scans the staged changes.
+#   2. PHP: PSR-12 style on the staged .php files, then PHPStan on the project.
+# Runs with the host PHP so it works even when Docker is not running.
+set -u
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+    echo "pre-commit: gitleaks is not installed; refusing to commit without a secret scan." >&2
+    exit 1
+fi
+gitleaks git --pre-commit --staged --redact --no-banner -v || exit 1
+
+php_files=$(git diff --cached --name-only --diff-filter=ACMR -- '*.php')
+[ -z "$php_files" ] && exit 0
+
+if ! command -v php >/dev/null 2>&1 || [ ! -f vendor/bin/phpcs ] || [ ! -f vendor/bin/phpstan ]; then
+    echo "pre-commit: PHP or vendor/ is missing. Run: docker compose run --rm app composer install" >&2
+    exit 1
+fi
+
+echo "pre-commit: PSR-12 style on staged PHP files"
+# shellcheck disable=SC2086  # word splitting on file names is intended
+if ! php vendor/bin/phpcs $php_files; then
+    echo "pre-commit: style errors. Auto-fix what can be fixed: composer lint:fix" >&2
+    exit 1
+fi
+
+echo "pre-commit: PHPStan"
+php vendor/bin/phpstan analyse --no-progress --memory-limit=512M || exit 1

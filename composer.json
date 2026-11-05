@@ -1,0 +1,52 @@
+{
+    "name": "duqueom/agent-whatsapp-php",
+    "description": "WhatsApp customer-service bot: PHP 8.3, MySQL, LLM tool calling.",
+    "type": "project",
+    "require": {
+        "php": "^8.3",
+        "ext-intl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "guzzlehttp/guzzle": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": "phpcs",
+        "lint:fix": "phpcbf",
+        "analyse": "phpstan analyse --memory-limit=512M",
+        "check": [
+            "@lint",
+            "@analyse"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run the PHPUnit test suites (unit + integration).",
+        "lint": "Check PSR-12 coding style (rules in phpcs.xml.dist).",
+        "lint:fix": "Fix the style errors that can be fixed automatically.",
+        "analyse": "Run PHPStan static analysis (rules in phpstan.neon.dist).",
+        "check": "Run lint and analyse: the static checks of the pre-commit hook."
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.3.0"
+        }
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.3",
+        "phpunit/phpunit": "^12.5",
+        "squizlabs/php_codesniffer": "^4.0"
+    }
+}

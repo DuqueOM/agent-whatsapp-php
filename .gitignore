@@ -12,6 +12,8 @@
 /vendor/
 
 # --- Test & tool caches --------------------------------------------------
+# phpunit.xml.dist is the shared config; phpunit.xml is a personal override.
+/phpunit.xml
 /.phpunit.cache/
 .phpunit.result.cache
 /coverage/
